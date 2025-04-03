@@ -1,0 +1,60 @@
+/camera_node:
+  ros__parameters:
+    camera_info_url: package://rm_startup/config/rm_camera_info.yaml
+    exposure_time: 1500
+    gain: 16.0
+
+/serial_driver:
+  ros__parameters:
+    timestamp_offset: 0.002
+    device_name: /dev/ttyACM0
+    baud_rate: 115200
+    flow_control: none
+    parity: none
+    stop_bits: "1"
+
+/armor_detector:
+  ros__parameters:
+    detector_debug: 1
+
+    is_openvino: true
+    detect_color: 0 # 0: blue, 1: red
+    priority_armors: [100,100,100,10,100,100,100,100,100]
+    ignore_armors: [-1] # ignore armors with specific id
+
+    binary_thres: 80
+    light.min_ratio: 0.1
+    armor.min_light_ratio: 0.8
+
+    classifier_threshold: 0.8
+    ignore_classes: ["negative"]
+
+    MIN_BIG_ARMOR_RATIO: 3.2
+
+/armor_tracker:
+  ros__parameters:
+    tracker_debug: 0
+
+    q_xyz: 500.0
+    q_yaw: 1050.0
+    q_r: 80.0
+    r_xyz: 4e-1
+    r_yaw: 5e-1
+
+    a_q_xyz: 3000.0
+    a_r_xyz: 4e-2
+
+    max_match_distance: 0.5
+    max_match_yaw_diff: 2.0
+    tracking_time_thres: 5
+    lost_time_thres: 0.3
+
+/mechax_trajectory:
+  ros__parameters:
+    is_hero: true
+
+    max_yaw_diff: 0.5
+
+/closed_loop:
+  ros__parameters:
+    is_running: true

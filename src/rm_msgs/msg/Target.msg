@@ -1,0 +1,15 @@
+std_msgs/Header header
+bool tracking
+string id
+int32 armor_num
+geometry_msgs/Pose armor_position
+geometry_msgs/Pose car_position
+geometry_msgs/Vector3 armor_velocity
+geometry_msgs/Vector3 car_velocity
+float64 yaw
+float64 v_yaw
+float64 radius_1
+float64 radius_2
+float64 dz
+float64 c_to_a_pitch
+bool is_repeat

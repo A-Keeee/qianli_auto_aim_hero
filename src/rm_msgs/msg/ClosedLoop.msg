@@ -1,0 +1,15 @@
+std_msgs/Header image_header
+std_msgs/Header shoot_header
+string id
+int8 armor_num
+float64 r
+float64 another_r
+float64 dz
+float64 yaw
+float64 c_to_a_pitch
+geometry_msgs/Pose now_pose
+geometry_msgs/Pose pred_pose
+geometry_msgs/Pose now_armor_pose
+float64 v0
+float64 theta
+float64 fly_t

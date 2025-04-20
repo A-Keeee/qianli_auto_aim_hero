@@ -1,7 +1,7 @@
 /camera_node:
   ros__parameters:
     camera_info_url: package://rm_startup/config/rm_camera_info.yaml
-    exposure_time: 1500
+    exposure_time: 2000
     gain: 16.0
 
 /serial_driver:
@@ -17,7 +17,6 @@
   ros__parameters:
     detector_debug: 1
 
-    is_openvino: true
     detect_color: 0 # 0: blue, 1: red
     priority_armors: [100,100,100,10,100,100,100,100,100]
     ignore_armors: [-1] # ignore armors with specific id
@@ -33,16 +32,16 @@
 
 /armor_tracker:
   ros__parameters:
-    tracker_debug: 0
+    tracker_debug: 1
 
-    q_xyz: 500.0
-    q_yaw: 1050.0
-    q_r: 80.0
-    r_xyz: 4e-1
-    r_yaw: 5e-1
+    q_xyz: 20.0
+    q_yaw: 200.0
+    q_r: 800.0
+    r_xyz: 4e-4
+    r_yaw: 5e-3
 
-    a_q_xyz: 3000.0
-    a_r_xyz: 4e-2
+    a_q_xyz: 20.0
+    a_r_xyz: 4e-4
 
     max_match_distance: 0.5
     max_match_yaw_diff: 2.0
@@ -51,7 +50,7 @@
 
 /mechax_trajectory:
   ros__parameters:
-    is_hero: true
+    is_hero: false
 
     max_yaw_diff: 0.5
 

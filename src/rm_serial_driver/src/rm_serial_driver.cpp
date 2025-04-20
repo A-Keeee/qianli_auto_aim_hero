@@ -219,7 +219,7 @@ void RMSerialDriver::receiveData()
                       t.header.frame_id = "odom";
                       t.child_frame_id = "gimbal_link";
                       tf2::Quaternion q;
-                      q.setRPY(packet.roll / 57.3f, -packet.pitch / 57.3f, packet.yaw / 57.3f);
+                      q.setRPY(packet.roll / 57.3f, packet.pitch / 57.3f, packet.yaw / 57.3f);
                       t.transform.rotation = tf2::toMsg(q);
                       tf_broadcaster_->sendTransform(t);
 
@@ -229,7 +229,7 @@ void RMSerialDriver::receiveData()
                       t_q.header.frame_id = "camera_optical_frame";
                       t_q.child_frame_id = "horizontal_camera_link";
                       tf2::Quaternion q_t;
-                      q_t.setRPY(packet.pitch / 57.3f, 180 / 57.3f, - packet.roll / 57.3f);
+                      q_t.setRPY(- packet.pitch / 57.3f, 180 / 57.3f, - packet.roll / 57.3f);
                       t_q.transform.rotation = tf2::toMsg(q_t);
                       tf_broadcaster_->sendTransform(t_q);
 

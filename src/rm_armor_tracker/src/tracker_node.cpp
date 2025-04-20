@@ -218,6 +218,7 @@ void ArmorTrackerNode::armorCallback(const rm_msgs::msg::Armor::SharedPtr armor_
         target_msg.v_yaw = 0;
         target_msg.radius_1 = 0;
         target_msg.radius_2 = 0;
+        target_msg.dz = 0;
         target_msg.c_to_a_pitch = 0;
         target_pub_->publish(target_msg);
     }

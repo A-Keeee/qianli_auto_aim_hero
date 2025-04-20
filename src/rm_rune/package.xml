@@ -19,6 +19,8 @@
   <depend>cv_bridge</depend>
   <depend>tf2</depend>
   <depend>tf2_ros</depend>
+  <depend>image_transport</depend>
+  <depend>pluginlib</depend>
   <depend>rm_msgs</depend>
 
   <export>

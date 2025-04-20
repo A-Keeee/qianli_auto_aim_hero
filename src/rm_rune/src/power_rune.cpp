@@ -1,60 +1,41 @@
+// 好像可以略
+// 决断函数 进行判断和执行
+
+
+
 #include "power_rune.hpp"
 
+// PowerRune 构造函数
 PowerRune::PowerRune()
 {
-    // Constructor
-}
-
-float PowerRune::huCondition(ContourInfo& contour,const cv::Mat& ref_hu)
-{
-    cv::Mat hu_moments = contour.huMoments;
-    float hu_dev = contour.hu_moments_deviation(contour.huMoments, ref_hu);
-    return hu_dev;
+    // 空的构造函数，没有初始化操作
 }
 
 
-bool PowerRune::areaCondition(ContourInfo& contour, const float& min_area) 
-{
-    float area = contour.getArea();
-    bool result = area > min_area;
-    return result;
-}
-
-std::vector<ContourInfo> PowerRune::filterByArea(std::vector<ContourInfo>& contours, float minArea) {
-    std::vector<ContourInfo> filtered;
-    std::copy_if(contours.begin(), contours.end(), std::back_inserter(filtered), [this,minArea](ContourInfo& contour) {
-        bool result = this->areaCondition(contour, minArea);
-        return result;
-    });
-    return filtered;
-}
-
-std::vector<ContourInfo> PowerRune::filterByHu(std::vector<ContourInfo>& contours, const cv::Mat& refHu, float huDevThreshold) {
-    std::vector<std::pair<ContourInfo, double>> filteredWithDeviation;
-
-    for (auto& contour : contours) {
-        cv::Mat hu_moments = contour.huMoments;
-        double deviation = contour.hu_moments_deviation(hu_moments, refHu);
-        if (deviation <= huDevThreshold) {
-            filteredWithDeviation.emplace_back(contour, deviation);
-        }
-    }
-
-    std::sort(filteredWithDeviation.begin(), filteredWithDeviation.end(), [](const auto& a, const auto& b) {
-        return a.second < b.second;
-    });
-
-    std::vector<ContourInfo> sortedContours;
-    for (const auto& pair : filteredWithDeviation) {
-        sortedContours.push_back(pair.first);
-    }
-
-    return sortedContours;
-}
-
+// 根据给定的旋转角度和向量，预测旋转后的向量
+// 参数：
+//   vector - 输入的二维向量
+//   radian - 旋转的角度（以弧度为单位）
+// 返回值：返回旋转后的向量
 cv::Point2f PowerRune::predict(const cv::Point2f& vector, float radian) {
+    // 构建二维旋转矩阵
     cv::Matx22f rotationMatrix(std::cos(radian), -std::sin(radian),
                                std::sin(radian), std::cos(radian));
+    
+    // 使用旋转矩阵对输入向量进行旋转
     cv::Point2f rotatedVector = rotationMatrix * cv::Vec2f(vector.x, vector.y);
+    
+    // 返回旋转后的向量
     return rotatedVector;
+}
+
+std::vector<ContourInfo> PowerRune::sortByconf(std::vector<ContourInfo>& contours)
+{
+    // 对 contours 按照 conf 字段进行从大到小排序
+    std::sort(contours.begin(), contours.end(), [](const ContourInfo& a, const ContourInfo& b) {
+        return a.conf > b.conf;  // 从大到小排序
+    });
+
+    // 直接返回排序后的 contours 向量
+    return contours;
 }

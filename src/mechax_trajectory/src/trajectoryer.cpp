@@ -86,7 +86,7 @@ void  Trajectoryer::parameters_init()
     //----------------------------------------------------
     if(is_hero)
     {
-        v0 = 14; // m/s
+        v0 = 16; // m/s
     }
     else
     {
@@ -364,7 +364,7 @@ int Trajectoryer::solve_trajectory()
             position_result.distance = sqrtf(pow(position_result.x, 2) + pow(position_result.y, 2) + pow(position_result.z, 2));
             results.push_back(position_result);
             use_1 = !use_1;
-            //std::cout << "第" << i << "个装甲板: tmp_yaw: " << tmp_yaw << std::endl;
+            std::cout << "第" << i << "个装甲板: tmp_yaw: " << tmp_yaw << std::endl;
         }
 
         int distance_ignore_one = 0;
@@ -409,19 +409,19 @@ int Trajectoryer::solve_trajectory()
                 yaw_diff_min = temp_yaw_diff;
                 idx = i;
             }
-            /*std::cout << "第" << i << "个装甲板： armor_odom_yaw: " << armor_odom_yaw << "  temp_yaw_diff: " <<temp_yaw_diff<<std::endl;
+            std::cout << "第" << i << "个装甲板： armor_odom_yaw: " << armor_odom_yaw << "  temp_yaw_diff: " <<temp_yaw_diff<<std::endl;
             std::cout << "x: " << results.at(i).x << "   y: " << results.at(i).y << "  z: " << results.at(i).z <<std::endl;
-            std::cout << "results.at(i).distance: " << results.at(i).distance << std::endl*/
+            std::cout << "results.at(i).distance: " << results.at(i).distance << std::endl;
         }
 
-        // std::cout << "car_odom_yaw" << car_odom_yaw << std::endl;
-        // std::cout << "idx" << idx << std::endl;
-        // std::cout << "yaw_diff_min" << yaw_diff_min << std::endl;
+        std::cout << "car_odom_yaw" << car_odom_yaw << std::endl;
+        std::cout << "idx" << idx << std::endl;
+        std::cout << "yaw_diff_min" << yaw_diff_min << std::endl;
     }
     if(idx != 0)
     {
         is_change_armor = true;
-        //std::cout << "mechax_trajectory change armor" << std::endl;
+        std::cout << "mechax_trajectory change armor" << std::endl;
     }
 //得到results :存放了所有装甲板的位置信息 
 //得到idx :选择的装甲板的编号
@@ -571,10 +571,6 @@ void Trajectoryer::targetCallback(const rm_msgs::msg::Target msg)
     r_2 = msg.radius_2;
     dz = msg.dz;
 
-    std::cout << "r_1: " << r_1 << std::endl;
-    std::cout << "r_2: " << r_2 << std::endl;
-    std::cout << "dz: " << dz << std::endl;
-
     is_repeat = msg.is_repeat;
 
     // 闭环数据收集
@@ -611,12 +607,12 @@ void Trajectoryer::targetCallback(const rm_msgs::msg::Target msg)
             result.header.frame_id = "shoot";
             //--------------------------------------------
             //弧度制转角度制
-            float send_pitch = angle_pitch * 57.3f;
+            float send_pitch = -angle_pitch * 57.3f;
             float send_yaw = 0.0;
             send_yaw = (angle_yaw) * 57.3f;
             //float send_yaw = (angle_yaw) * 57.3f;
             //--------------------------------------------
-            float max_yaw_diff = 1.0; //现在的yaw与计算的需求yaw的最大容忍差值，可根据需求更改
+            float max_yaw_diff = 0.5; //现在的yaw与计算的需求yaw的最大容忍差值，可根据需求更改
             if(abs(send_yaw - now_yaw * 57.3f) > max_yaw_diff)
             {
                 is_can_hit = false;
